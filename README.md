@@ -22,12 +22,16 @@ minishift config set openshift-version v3.9.0
 minishift start --vm-driver=virtualbox --profile sampleapp --metrics
 ```
 
-## Setup Helm
+## Install [Helm](https://docs.helm.sh/using_helm/)
+
+
+## Configure Helm
 
 ```
 oc login -u system:admin
 oc create serviceaccount tiller -n kube-system
 oc adm policy add-cluster-role-to-user cluster-admin -z tiller -n kube-system
+oc project kube-system
 helm init --service-account tiller
 ```
 
@@ -50,6 +54,7 @@ oc project pr-sample-application
 ### Helm Install Commands
 
 ```
+cd
 helm install --dry-run --debug ./ocp-sample-helm-application
 helm install --name sample-app ./ocp-sample-helm-application
 ```

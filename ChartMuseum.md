@@ -4,10 +4,10 @@
 
 ```
 oc new-project pr-chartmuseum --description="ChartMuseum Project" --display-name="ChartMuseum Project"
-helm install stable/chartmuseum
-oc expose service smelly-quoll-chartmuseum
+helm del --purge chartmuseum
+helm install --name chartmuseum stable/chartmuseum
+oc expose service chartmuseum-chartmuseum
 ```
-
 ## Create a Chart
 
 ```
@@ -17,7 +17,7 @@ helm package .
 
 ## Upload Chart
 
-curl --data-binary "@ocp-sample-helm-application-0.0.1.tgz" http://smelly-quoll-chartmuseum-pr-sample-application.192.168.99.100.nip.io/api/charts
+curl --data-binary "@ocp-sample-helm-application-0.0.1.tgz" http://chartmuseum-chartmuseum-pr-chartmuseum.192.168.99.100.nip.io/api/charts
 
 ## Installing Charts into Kubernetes
 
