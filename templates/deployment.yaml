@@ -1,0 +1,62 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  labels:
+    app: {{ .Values.label.app | quote }}
+  name: "dc-{{ .Values.label.app }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    app: {{ .Values.label.app | quote }}
+    deploymentconfig: "dc-{{ .Values.label.app }}"
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      labels:
+        app: {{ .Values.label.app | quote }}
+        deploymentconfig: "dc-{{ .Values.label.app }}"
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ .Values.label.app | quote }}
+            topologyKey: kubernetes.io/hostname
+
+      #securityContext:
+        #runAsNonRoot: true
+
+      terminationGracePeriodSeconds: {{ .Values.podSettings.terminationGracePeriodSeconds }}
+
+      containers:
+      - env:
+        {{- include "ui.envvars" . | indent 6 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+
+        name: {{ .Values.label.app | quote }}
+        ports:
+        - containerPort: {{ .Values.service.containerPort }}
+          protocol: {{ .Values.service.protocol | quote }}
+
+        livenessProbe:
+{{ toYaml .Values.probe | indent 10 }}
+        readinessProbe:
+{{ toYaml .Values.probe | indent 10 }}
+
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - {{ .Values.label.app | quote }}
+      from:
+        kind: ImageStreamTag
+        name: is-{{ .Values.label.app }}:{{ .Values.image.tag }}
+    type: ImageChange

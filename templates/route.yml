@@ -1,0 +1,15 @@
+apiVersion: "route.openshift.io/v1"
+kind: "Route"
+metadata:
+  name: "rt-{{ .Values.label.app }}"
+  labels:
+    route: internal
+spec:
+  host: {{ .Values.route.host | quote }}
+  to:
+    kind: "Service"
+    name: "svc-{{ .Values.label.app }}"
+    weight: "100"
+  port:
+    targetPort: "3000-{{ .Values.service.protocol | lower }}"
+  wildcardPolicy: None

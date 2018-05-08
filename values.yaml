@@ -1,0 +1,87 @@
+# Default values for sample-app.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  kind: DockerImage
+  repository: "jboss/wildfly"
+  tag: 11.0.0.Final
+  pullPolicy: IfNotPresent
+  lookupPolicy:
+    local: false
+  importPolicy:
+    scheduled: true
+  referencePolicy:
+    type: Source
+
+podSettings:
+  terminationGracePeriodSeconds: 15
+
+service:
+  type: ClusterIP
+  protocol: TCP
+  containerPort: 8080
+  servicePort: 8080
+
+label:
+  app: sample-app
+  environment: sit
+
+route:
+  label:
+    type: internal
+  host: "sample-application.192.168.99.100.nip.io"
+
+triggers:
+  imageChangeParams:
+    automatic: true
+    type: ImageChange
+
+envvars:
+  API_CLIENTLIST_URL: "http://svc-clientlisting:8080"
+  DEBUG: "express-http-proxy"
+  ENV: "development"
+  API_CSL_URL: "http://svc-csl:8080/retail/api/v3"
+
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - sample-app
+      topologyKey: kubernetes.io/hostname
+
+probe:
+  httpGet:
+    path: /
+    port: 8080
+    scheme: HTTP
+  initialDelaySeconds: 5
+  timeoutSeconds: 5
+  periodSeconds: 10
+  successThreshold: 1
+  failureThreshold: 3
+
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits:
+    cpu: 1000m
+    memory: 2048Mi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
