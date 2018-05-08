@@ -33,24 +33,27 @@ helm init --service-account tiller
 
 ## Clone the Project
 
+```
+git clone https://github.com/GetLevvel/ocp-sample-helm-application.git
+```
 
 ## Install Sample Application via Helm
 
-# Change to the target Project
+### Change to the target Project
 
 ```
 oc login -u system:admin
 oc project pr-sample-application
 ```
 
-# Helm Install Commands
+### Helm Install Commands
 
 ```
 helm install --dry-run --debug ./ocp-sample-helm-application
 helm install --name sample-app ./ocp-sample-helm-application
 ```
 
-# Helm Delete Commands
+### Helm Delete Commands
 
 ```
 helm del --purge sample-app
