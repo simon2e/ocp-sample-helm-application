@@ -53,6 +53,30 @@ helm install --dry-run --debug ./ocp-sample-helm-application
 helm install --name sample-app ./ocp-sample-helm-application
 ```
 
+```
+jamesb@Surface:~$ helm install --name sample-app ./ocp-sample-helm-application
+NAME:   sample-app
+LAST DEPLOYED: Tue May  8 11:58:36 2018
+NAMESPACE: pr-sample-application
+STATUS: DEPLOYED
+
+RESOURCES:
+==> v1/Route
+NAME           AGE
+rt-sample-app  0s
+
+==> v1/Service
+NAME            TYPE       CLUSTER-IP    EXTERNAL-IP  PORT(S)   AGE
+svc-sample-app  ClusterIP  172.30.45.15  <none>       8080/TCP  0s
+
+==> v1/DeploymentConfig
+NAME           AGE
+dc-sample-app  0s
+
+==> v1/ImageStream
+is-sample-app  0s
+```
+
 ### Helm Delete Commands
 
 ```
