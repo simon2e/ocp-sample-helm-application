@@ -43,6 +43,7 @@ git clone https://github.com/GetLevvel/ocp-sample-helm-application.git
 
 ```
 oc login -u system:admin
+oc new-project pr-sample-application --description="Sample Application Project" --display-name="Sample Application Project"
 oc project pr-sample-application
 ```
 
