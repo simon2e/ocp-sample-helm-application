@@ -1,4 +1,4 @@
-# ChartMuseum[https://github.com/kubernetes-helm/chartmuseum]
+# [ChartMuseum](https://github.com/kubernetes-helm/chartmuseum)
 
 ## Installing ChartMuseum
 

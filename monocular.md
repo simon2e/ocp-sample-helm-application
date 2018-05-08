@@ -1,4 +1,4 @@
-# Monocular[https://github.com/kubernetes-helm/monocular]
+# [Monocular](https://github.com/kubernetes-helm/monocular)
 
 ## Install Monocular
 
