@@ -19,6 +19,7 @@ helm package .
 ## Enable API for Chart Upload 
 
 ```
+cd $HOME/.helm/cache/archive
 tar -xvf chartmuseum-1.3.1.tgz
 vi chartmuseum/values.yaml
 DISABLE_API: true to DISABLE_API: false
