@@ -29,6 +29,7 @@ oc expose service chartmuseum-chartmuseum
 ## Upload Chart
 
 curl --data-binary "@ocp-sample-helm-application-0.0.1.tgz" http://chartmuseum-chartmuseum-pr-chartmuseum.192.168.99.100.nip.io/api/charts
+curl -v http://chartmuseum-chartmuseum-pr-chartmuseum.192.168.99.100.nip.io/index.yaml
 ```
 
 ## Installing Charts into Kubernetes

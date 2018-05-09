@@ -1,12 +1,13 @@
 # [Monocular](https://github.com/kubernetes-helm/monocular)
 
+[KubeApp](https://github.com/kubeapps/kubeapps)
+
 ## Install Monocular
 
 ```
 oc new-project pr-monocular --description="Monocular Project" --display-name="Monocular Project"
 helm repo add monocular https://kubernetes-helm.github.io/monocular
 oc project pr-monocular
-# helm install --name monocular -f custom-repos.yaml monocular/monocular
 helm install --name monocular -f separate-domains.yaml monocular/monocular
 oc expose service monocular-monocular-api
 # oc expose service monocular-monocular-prerender
