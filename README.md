@@ -55,6 +55,7 @@ oc project pr-sample-application
 
 ```
 cd
+helm del --purge sample-app
 helm install --dry-run --debug ./ocp-sample-helm-application
 helm install --name sample-app ./ocp-sample-helm-application
 ```
